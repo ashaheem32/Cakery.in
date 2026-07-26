@@ -1,0 +1,149 @@
+@import 'tailwindcss';
+
+/* ── Brand tokens, lifted from the @the_cakery.in identity ───────────────
+   Deep forest green + cream leaf mark, with gold used for celebration.   */
+@theme {
+  --color-forest-950: #04170f;
+  --color-forest-900: #07281d;
+  --color-forest-850: #092f22;
+  --color-forest-800: #0b3b2b;
+  --color-forest-700: #0f4c37;
+  --color-forest-600: #146044;
+  --color-forest-500: #1d7a58;
+
+  --color-cream: #f4efe4;
+  --color-cream-dim: #cfc7b6;
+  --color-cream-mute: #9aa398;
+
+  --color-gold: #c9a227;
+  --color-gold-light: #e6c96a;
+
+  --color-cocoa: #4a2c1d;
+  --color-cocoa-light: #7b4a2f;
+  --color-berry: #9d2235;
+
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-script: 'Caveat', ui-serif, cursive;
+
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: auto; /* Lenis owns scrolling */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-forest-950);
+    color: var(--color-cream);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: var(--color-forest-950);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-optical-sizing: auto;
+  }
+
+  /* Lenis requirement */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Gold foil gradient used on display headings */
+  .foil {
+    background: linear-gradient(
+      100deg,
+      var(--color-gold) 0%,
+      var(--color-gold-light) 32%,
+      #fff8e0 46%,
+      var(--color-gold-light) 60%,
+      var(--color-gold) 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: foil-sweep 7s var(--ease-silk) infinite;
+  }
+
+  /* Frosted glass panel */
+  .glass {
+    background: color-mix(in srgb, var(--color-forest-800) 55%, transparent);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid color-mix(in srgb, var(--color-cream) 12%, transparent);
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Swipeable rows on mobile shouldn't show a scrollbar */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Fine paper/sugar grain overlay */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@keyframes foil-sweep {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Hide the native cursor only where a real pointer + hover exists */
+@media (hover: hover) and (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button {
+    cursor: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

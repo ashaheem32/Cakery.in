@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "oxc"],
+  // `._*` are macOS AppleDouble sidecar files; this project lives on an
+  // exFAT volume, so they appear next to every source file and are not UTF-8.
+  "ignorePatterns": ["dist/**", "**/._*"],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}
